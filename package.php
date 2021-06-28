@@ -136,9 +136,16 @@ The vast majority of AdvCash transactions are confirmed in less than 1 hour, how
 some of the transactions may be proceeded up to 3 business days.</p>
                             </div> 
                         </div>
+                        <?$price="select * from token_price where m_start_date>=CURDATE() OR m_end_date>CURDATE() order by m_start_date ASC limit 1";
+                                $price = mysqli_query($conn,$price);
+                                $price1=mysqli_fetch_assoc($price);
+                                ?>
                         <div class="card sub-menu">
                             <div class="card-body">
-                                <h3 class="text-white">Choose The Package of CPH4 Token</h3>
+                                <h3 class="text-white text-center">The Package Details of CPH4 Token</h3>
+                                <h5 class="text-white font-weight-normal"><span>Name of Master Package: <? echo $price1['m_package_name'];?></span>    <span class="float-right">   Price of Master Package: <? echo $price1['m_package_price'];?></h5></span>
+                                <h5 class="text-white font-weight-normal"><span>Start Date of Master Package: <? echo $price1['m_start_date'];?></span>     <span class="float-right">  End Date of Master Package: <? echo $price1['m_end_date'];?></h5></span>
+                                <h5 class="text-white font-weight-normal text-center" id="message"></h5><span class="text-center m-auto" style="display:grid; color:#ff67cb;" id="timer"></span>
                             </div> 
                         </div>
                         <div class="row">
@@ -148,13 +155,12 @@ some of the transactions may be proceeded up to 3 business days.</p>
                                         while($row = mysqli_fetch_assoc($result))
                                         {
                                             $cph = $row['cph_value'];
-                                            $currencyname = $row['currency_name'];
-                                            $currencyvalue = $row['currency_value'];
+                                            $currencyvalue = bcdiv(($price1['m_package_price']*$row['cph_value']),1,2);
                                             
                                             
                                     ?>
                                     
-                          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 fom" id="">
                                 <div class="card text-center pt-2">
                                     
                                     <div class="card-body">
@@ -163,29 +169,18 @@ some of the transactions may be proceeded up to 3 business days.</p>
                                         <input type="hidden" name="ac_account_email" value="julien@ottentik.com">
                                         <input type="hidden" name="ac_sci_name" value="CPH4">
                                         <input type="hidden" name="ac_amount" value="<?php echo $currencyvalue; ?>">
-                                        <input type="hidden" name="ac_currency" value="<?php echo $currencyname; ?>">
+                                        <input type="hidden" name="ac_currency" value="USD">
                                         <input type="hidden" name="ac_order_id" value="<?php echo $orderid; ?>">
                                         <input type="hidden" name="ac_sign"
                                         value="36b4c9ad29b61d1c5996e3ef1a3af0c3194e19713613b6bf26a9b905b8019225">
                                         <input type="hidden" name="ac_comments" value="Payment for <?php echo $cph; ?> CPH">
                                         <!-- Merchant custom fields -->
                                         <input type="hidden" name="operation_id" value="234235436">
-                                        <button type="submit" id="login<? echo $row['id'];?>" name="login" class="btn btn-dark"><h4><?php echo $cph.' CPH4'; ?></h4><h4><?php echo $currencyvalue.' '. $currencyname; ?></h4></button>
+                                        <h4><?php echo $cph.' CPH4'; ?></h4><h4><?php echo $currencyvalue.' USD'; ?></h4>
+                                        <button type="submit" class="btn btn-success" id="login<? echo $row['id'];?>" name="login" class="btn btn-dark">Buy Now</button>
                                         <!--<input type="hidden" name="login" class="btn btn-dark" value="denis">-->
-                                        <p> <span> Start Date: <? echo $row['s_time'];?></span> <span> End Date: <? echo $row['e_time'];?></span></p>
                                         </form>
-                                        <script>
-                                           var x = setInterval(function() { 
-                                               var id='<? echo "time".$row["id"];?>';
-                                            var dd= timerr('<? echo "time".$row["id"];?>', '<? echo "login".$row["id"];?>', '<? echo $row["s_time"];?>', '<? echo $row["e_timed"];?>');
-                                            console.log(dd);
-                                             if (dd < 0) {
-                                                        clearInterval(x);
-                                                        document.getElementById(id).innerHTML="expired"
-                                                        //document.getElementById(lid).disabled=false;
-                                                    }
-                                           }, 1000);
-                                        </script>
+                                        
                                         
                                     </div>
                                    
@@ -196,17 +191,35 @@ some of the transactions may be proceeded up to 3 business days.</p>
                         </div>
                     </div>
                     <script>
-                        function timerr(id, lid, stime, etime){
-                                                    var countDownDate = new Date(stime).getTime();
-                                            	    
+                                           var x = setInterval(function() { 
+                                               var id='<? echo "timer";?>';
+                                           
+                                            var DownDate = new Date('<? echo $price1['m_start_date'];?>');
+                                            var now = new Date();
+                                            if(now<DownDate){
+                                                document.getElementById('message').innerHTML="Start In:"
+                                                timerr('timer', '', '<? echo $price1['m_start_date'];?>');
+                                                $(".fom").css("pointer-events","none");
+                                            }else{
+                                                 var dd= timerr('timer', '', '<? echo $price1['m_end_date'];?>');
+                                             if (dd < 0) {
+                                                        clearInterval(x);
+                                                        document.getElementById(id).innerHTML="expired"
+                                                    }else{
+                                                        document.getElementById('message').innerHTML="End In: "
+                                                    }
+                                            }
+                                           }, 1000);
+                        function timerr(id, lid, etime){
+                                                    var countDownDate = new Date(etime).getTime();
                                                   var now = new Date().getTime();
                                                   var distance = countDownDate - now;
                                                   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                                                   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                                   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                                                   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                                                  document.getElementById(id).innerHTML = "Start in : "+ days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
-                                                  document.getElementById(lid).disabled  = true;
+                                                  document.getElementById(id).innerHTML =  days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+                                                 // document.getElementById(lid).disabled  = true;
                                                    return distance;
                                             	
                                             }

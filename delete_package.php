@@ -8,12 +8,12 @@
     
     if($result)
     {
-        echo "<script>alert('Package deleted successfully.'); window.location='https://ramlogics.com/cph_4/admin_dashboard.php/'</script>";
+        echo "<script>alert('Package deleted successfully.'); window.location='./admin_dashboard.php'</script>";
         
     }
     else
     {
-        echo "<script>alert('Something is wrong, Try again!!'); window.location='https://ramlogics.com/cph_4/admin_dashboard.php/'</script>";
+        echo "<script>alert('Something is wrong, Try again!!'); window.location='./admin_dashboard.php'</script>";
     }
 
 ?>

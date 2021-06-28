@@ -15,7 +15,7 @@ if(isset($_POST['login'])){
 	if($numRows  == 1){
 		$row = mysqli_fetch_assoc($rs);
 		if(password_verify($password,$row['password'])){
-			header('location:https://ramlogics.com/cph_4/admin_dashboard.php/');
+			header('location:./admin_dashboard.php');
 		}
 		else{
 			echo "<script>alert('Wrong password')</script>";

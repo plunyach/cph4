@@ -107,17 +107,29 @@ include 'dbcon.php';
         <!-- END HEADER -->
 <div id="particles-js"></div>
         <!-- START SECTION BANNER -->
-        <section class="section_banner bg_black_dark" data-z-index="1" data-parallax="scroll" data-image-src="https://ramlogics.com/cph_4/cph4_assets/images/banner_bg2.png">
+        <section class="section_banner bg_black_dark" data-z-index="1" data-parallax="scroll" data-image-src="./cph4_assets/images/banner_bg2.png">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-sm-12 order-lg-first">
                         <div class="banner_text_s2 text_md_center">
                             <h1 class="animation text-white" data-animation="fadeInUp" data-animation-delay="1.1s"><strong>Bitcoin</strong> is peer to peer innovative <strong>network</strong></h1>
+                            <? $price="select * from token_price where m_start_date>=CURDATE() AND m_end_date>CURDATE() order by m_start_date ASC limit 1";
+                                $price = mysqli_query($conn,$price);
+                                $price1=mysqli_fetch_assoc($price);
+                                $start=$price1['m_start_date']; $end=$price1['m_end_date'];
+                                $query="select sum(amount)as tokens from token_buy where time between '$start' AND '$end'";
+                                $no_of_token=mysqli_query($conn, $query);
+                                $no_of_tokens=mysqli_fetch_assoc($no_of_token);
+                                if(strtotime($price1['m_start_date'])<=strtotime(date("Y-m-d"))){?>
                             <h5 class="animation presale_txt text-white" data-animation="fadeInUp" data-animation-delay="1.3s">Token Presale is <mark class="gradient_box">Live</mark></h5>
                             <div class="transparent_bg tk_counter_inner m-lg-0 banner_token text-center px-0 animation" data-animation="fadeIn" data-animation-delay="1.4s">
-                                <div class="tk_countdown_time transparent_bg box_shadow_none border counter_medium animation"
-                                data-animation="fadeInUp" data-animation-delay="1.2s" data-time="2021/06/30 12:00:00"></div>
+                                    <div class="tk_countdown_time transparent_bg box_shadow_none border counter_medium animation" data-animation="fadeInUp" data-animation-delay="1.2s" data-time="<? echo str_replace("-","/",$price1['m_end_date']); ?>"></div>
+                            </div> <? } else{?>
+                                    <h5 class="animation presale_txt text-white" data-animation="fadeInUp" data-animation-delay="1.3s">Token Presale will <mark class="gradient_box">Start in</mark></h5>
+                            <div class="transparent_bg tk_counter_inner m-lg-0 banner_token text-center px-0 animation" data-animation="fadeIn" data-animation-delay="1.4s">
+                                    <div class="tk_countdown_time transparent_bg box_shadow_none border counter_medium animation" data-animation="fadeInUp" data-animation-delay="1.2s" data-time="<? echo str_replace("-","/",$price1['m_start_date']); ?>"></div>
                             </div>
+                            <?}?>
                             <div class="btn_group pt-2 pb-3 animation" data-animation="fadeInUp" data-animation-delay="1.4s">
                                 <a href="#whitepaper" class="btn btn-default btn-radius nav-link content-popup">Whitepaper <i class="ion-ios-arrow-thin-right"></i></a>
                                 <a href="#" class="btn btn-border btn-radius">Buy Token Now! <i class="ion-ios-arrow-thin-right"></i></a>
@@ -145,7 +157,7 @@ include 'dbcon.php';
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                        <img class="pt-3 pb-3" src="https://ramlogics.com/cph_4/cph4_assets/images/whitepaper.png" alt="whitepaper" />
+                                        <img class="pt-3 pb-3" src=./cph4_assets/images/whitepaper.png" alt="whitepaper" />
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +165,7 @@ include 'dbcon.php';
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 order-first">
                         <div class="banner_image_right res_md_mb_50 res_xs_mb_30 animation" data-animation-delay="1.5s" data-animation="fadeInRight">
-                            <img alt="banner_vector2" src="https://ramlogics.com/cph_4/cph4_assets/images/banner_img2.png" />
+                            <img alt="banner_vector2" src="./cph4_assets/images/banner_img2.png" />
                         </div>
                     </div>
                 </div>
@@ -177,42 +189,42 @@ include 'dbcon.php';
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="0.6s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon1.png" alt="service_icon1" />
+                            <img src="./cph4_assets/images/service_icon1.png" alt="service_icon1" />
                             <h4>Secure Storage</h4>
                             <p>your wallet must be secured. Bitcoin makes it possible to transfer value any where in a very easy way and it allows you to be in control of your money.</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="0.8s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon2.png" alt="service_icon2" />
+                            <img src="./cph4_assets/images/service_icon2.png" alt="service_icon2" />
                             <h4>Mobile App</h4>
                             <p>The #1 most popular cryptocurrency wallet for those looking to transform the financial system right from their pocket. Cash instantly with anyone in the world.</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="1s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon3.png" alt="service_icon3" />
+                            <img src="./cph4_assets/images/service_icon3.png" alt="service_icon3" />
                             <h4>Exchange Service</h4>
                             <p>Each user has unique needs, so there is no one size fits all for exchanges. Our Bitcoin exchange reviews detail each exchange's supported countries</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="1s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon4.png" alt="service_icon4" />
+                            <img src="./cph4_assets/images/service_icon4.png" alt="service_icon4" />
                             <h4>Investment projects</h4>
                             <p>Bitcoin investment opportunities exist outside of simply speculating on the Bitcoin exchange rate. sell bitcoins and profit from extreme changes</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="1s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon5.png" alt="service_icon5" />
+                            <img src="./cph4_assets/images/service_icon5.png" alt="service_icon5" />
                             <h4>Credit Card Use</h4>
                             <p>We are accept any credit or debit card from VISA or MasterCard. This option may be especially useful for those seek ing for the ways</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="box_wrap text-center animation" data-animation="fadeInUp" data-animation-delay="1s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/service_icon6.png" alt="service_icon6" />
+                            <img src="./cph4_assets/images/service_icon6.png" alt="service_icon6" />
                             <h4>Planning</h4>
                             <p>A cutting edge issue in traditional estate planning is Cryptocash. Cryptocash is a digital or virtual currency that uses cryptography for security</p>
                         </div>
@@ -228,7 +240,7 @@ include 'dbcon.php';
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-sm-12">
                         <div class="text_md_center">
-                            <img class="animation" data-animation="zoomIn" data-animation-delay="0.2s" src="https://ramlogics.com/cph_4/cph4_assets/images/about_img2.png" alt="aboutimg2" />
+                            <img class="animation" data-animation="zoomIn" data-animation-delay="0.2s" src="./cph4_assets/images/about_img2.png" alt="aboutimg2" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 res_md_mt_30 res_sm_mt_20">
@@ -248,7 +260,7 @@ include 'dbcon.php';
         <!-- END SECTION ABOUT US -->
 
         <!-- START SECTION TOKEN SALE -->
-        <section id="token" class="section_token token_sale bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="https://ramlogics.com/cph_4/cph4_assets/images/token_bg.png">
+        <section id="token" class="section_token token_sale bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="./cph4_assets/images/token_bg.png">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3 col-md-12 col-sm-12">
@@ -262,15 +274,15 @@ include 'dbcon.php';
                     <div class="col-lg-3">
                         <div class="pr_box">
                             <h6 class="animation" data-animation="fadeInUp" data-animation-delay="0.2s">Starting time :</h6>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.4s">Apr 23, 2018 (Mon 10:00 AM)</p>
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.4s"><? echo $price1['m_start_date'];?></p>
                         </div>
                         <div class="pr_box">
                             <h6 class="animation" data-animation="fadeInUp" data-animation-delay="0.6s">Ending time :</h6>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s">Jun 18, 2018 (Mon 12:00 PM)</p>
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s"><? echo $price1['m_end_date'];?></p>
                         </div>
                         <div class="pr_box">
                             <h6 class="animation" data-animation="fadeInUp" data-animation-delay="1s">Tokens exchange rate</h6>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="1.2s">1 ETH = 820 BCC, 1 BCC = 2150 BCC</p>
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="1.2s">1 USD= <? echo $price1['m_package_price'];?></p>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -278,11 +290,11 @@ include 'dbcon.php';
                             <div class="tk_countdown text-center animation token_countdown_bg" data-animation="fadeIn" data-animation-delay="1s">
                                 <div class="tk_counter_inner">
                                     <div class="tk_countdown_time animation"
-                                    data-animation="fadeInUp" data-animation-delay="1.2s" data-time="2021/06/30 12:00:00"></div>
+                                    data-animation="fadeInUp" data-animation-delay="1.2s" data-time="<? echo str_replace("-","/",$price1['m_end_date']); ?>"></div>
                                     <div class="progress animation" data-animation="fadeInUp" data-animation-delay="1.3s">
-                                        <div class="progress-bar progress-bar-striped gradient" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width: 46%;">46%</div>
-                                        <span class="progress_label bg-white" style="left: 30%;"> <strong> 46,000 BCC </strong></span>
-                                        <span class="progress_label bg-white" style="left: 75%;"> <strong> 90,000 BCC </strong></span>
+                                        <div class="progress-bar progress-bar-striped gradient" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width: 46%;"><? echo (($price1['m_package_tokens']/$no_of_tokens['tokens'])*100);?>%</div>
+                                        <span class="progress_label bg-white" style="left: 30%;"> <strong> <? echo $no_of_tokens['tokens'];?> CPH4 </strong></span>
+                                        <span class="progress_label bg-white" style="left: 75%;"> <strong> <? echo $price1['m_package_tokens'];?> CPH4 </strong></span>
                                         <span class="progress_min_val">Sale Raised</span>
                                         <span class="progress_max_val">Soft-caps</span>
                                     </div>
@@ -304,7 +316,7 @@ include 'dbcon.php';
                         </div>
                         <div class="pr_box">
                             <h6 class="animation" data-animation="fadeInUp" data-animation-delay="0.6s">Total tokens sale</h6>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s">850,000 BCC (8%)</p>
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s"><? echo $price1['m_package_tokens'];?></p>
                         </div>
                         <div class="pr_box">
                             <h6 class="animation" data-animation="fadeInUp" data-animation-delay="1s">Acceptable Currency :</h6>
@@ -334,15 +346,11 @@ include 'dbcon.php';
                                 while($row = mysqli_fetch_assoc($result))
                                 {
                                     $cphvalue = $row['cph_value'];
-                                    $currency_name = $row['currency_name'];
-                                    $currency_value = $row['currency_value'];
-                                    
-                                
                                 ?>
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-4 pt-3">
                                     <div class="col_area_price">
                                         <h6 class="text-white"><?php echo $cphvalue; ?> CPH4</h6>
-                                        <h6 class="text-white"><?php echo $currency_value.' ' .$currency_name; ?></h6>
+                                        <h6 class="text-white"><?php echo $price1['m_package_price']*$cphvalue." USD"; ?></h6>
                                     </div>
                                 </div>
                                 <?php } ?>
@@ -366,7 +374,7 @@ include 'dbcon.php';
                             <h4 class="animation" data-animation="fadeInUp" data-animation-delay="0.2s">Token Sale Proceeds</h4>
                         </div>
                         <div class="lg_pt_20 res_sm_pt_0 text-center animation" data-animation="fadeInRight" data-animation-delay="0.2s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/sale-proceeds3.png" alt="sale-proceeds3" />
+                            <img src="./cph4_assets/images/sale-proceeds3.png" alt="sale-proceeds3" />
                         </div>
                         <div class="divider small_divider"></div>
                         <ul class="list_none list_chart text-center">
@@ -397,7 +405,7 @@ include 'dbcon.php';
                             <h4 class="animation" data-animation="fadeInUp" data-animation-delay="0.2s">Token Distribution</h4>
                         </div>
                         <div class="lg_pt_20 res_sm_pt_0 text-center animation" data-animation="fadeInLeft" data-animation-delay="0.2s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/distribution3.png" alt="distribution3" />
+                            <img src="./cph4_assets/images/distribution3.png" alt="distribution3" />
                         </div>
                         <div class="divider small_divider"></div>
                         <ul class="list_none list_chart text-center">
@@ -429,7 +437,7 @@ include 'dbcon.php';
         <!-- END SECTION TOKEN PROCEEDS & DISTRIBUTION -->
 
         <!-- SECTION MOBILE APP -->
-        <section id="mobileapp" class="bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="https://ramlogics.com/cph_4/cph4_assets/images/app_bg.png">
+        <section id="mobileapp" class="bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="./cph4_assets/images/app_bg.png">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-7 col-md-12 col-sm-12">
@@ -450,7 +458,7 @@ include 'dbcon.php';
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12">
                         <div class="res_md_mt_50 res_sm_mt_30 text-center animation" data-animation="fadeInRight" data-animation-delay="0.2s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/mobile_app3.png" alt="mobile_app3" />
+                            <img src="./cph4_assets/images/mobile_app3.png" alt="mobile_app3" />
                         </div>
                     </div>
                 </div>
@@ -561,7 +569,7 @@ include 'dbcon.php';
                     <div class="col-lg-3 col-md-6 col-sm-6 res_md_mb_30 res_sm_mb_20">
                         <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
                             <div class="text-center">
-                                <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img1.png" alt="team1" />
+                                <img src="./cph4_assets/images/team_img1.png" alt="team1" />
                                 <div class="team_social_s2 list_none">
                                   <ul>
                                     <li>
@@ -587,7 +595,7 @@ include 'dbcon.php';
                                 <div class="row m-0">
                                     <div class="col-md-4 text-center">
                                         <div class="team_img_wrap">
-                                            <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-1.jpg" alt="user_img-lg" />
+                                            <img class="w-100" src="./cph4_assets/images/team-lg-1.jpg" alt="user_img-lg" />
                                             <div class="team_title">
                                                 <h4>Derek Castro</h4>
                                                 <span>Head Of Marketing</span>
@@ -631,7 +639,7 @@ include 'dbcon.php';
                     <div class="col-lg-3 col-md-6 col-sm-6 res_md_mb_30 res_sm_mb_20">
                         <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.6s">
                             <div class="text-center">
-                                <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img2.png" alt="team2" />
+                                <img src="./cph4_assets/images/team_img2.png" alt="team2" />
                                 <div class="team_social_s2 list_none">
                                   <ul>
                                     <li>
@@ -657,7 +665,7 @@ include 'dbcon.php';
                                 <div class="row m-0">
                                     <div class="col-md-4 text-center">
                                         <div class="team_img_wrap">
-                                            <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-2.jpg" alt="user_img-lg" />
+                                            <img class="w-100" src="./cph4_assets/images/team-lg-2.jpg" alt="user_img-lg" />
                                             <div class="team_title">
                                                 <h4>Jessica Bell</h4>
                                                 <span>Head Of Sale</span>
@@ -701,7 +709,7 @@ include 'dbcon.php';
                     <div class="col-lg-3 col-md-6 col-sm-6 res_md_mb_30 res_sm_mb_20">
                         <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.8s">
                             <div class="text-center">
-                                <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img3.png" alt="team3" />
+                                <img src="./cph4_assets/images/team_img3.png" alt="team3" />
                                 <div class="team_social_s2 list_none">
                                   <ul>
                                     <li>
@@ -727,7 +735,7 @@ include 'dbcon.php';
                                 <div class="row m-0">
                                     <div class="col-md-4 text-center">
                                         <div class="team_img_wrap">
-                                            <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-3.jpg" alt="user_img-lg" />
+                                            <img class="w-100" src="./cph4_assets/images/team-lg-3.jpg" alt="user_img-lg" />
                                             <div class="team_title">
                                                 <h4>Alvaro Martin</h4>
                                                 <span>Blockchain App Developer</span>
@@ -771,7 +779,7 @@ include 'dbcon.php';
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="1s">
                             <div class="text-center">
-                                <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img4.png" alt="team4" />
+                                <img src="./cph4_assets/images/team_img4.png" alt="team4" />
                                 <div class="team_social_s2 list_none">
                                   <ul>
                                     <li>
@@ -797,7 +805,7 @@ include 'dbcon.php';
                                 <div class="row m-0">
                                     <div class="col-md-4 text-center">
                                         <div class="team_img_wrap">
-                                            <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-4.jpg" alt="user_img-lg" />
+                                            <img class="w-100" src="./cph4_assets/images/team-lg-4.jpg" alt="user_img-lg" />
                                             <div class="team_title">
                                                 <h4>Maria Willium</h4>
                                                 <span>Community Manager</span>
@@ -853,7 +861,7 @@ include 'dbcon.php';
                             <div class="col-lg-4 col-md-6 col-sm-6 res_md_mb_30 res_sm_mb_20">
                                 <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
                                     <div class="text-center">
-                                        <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img5.png" alt="team5" />
+                                        <img src="./cph4_assets/images/team_img5.png" alt="team5" />
                                         <div class="team_social_s2 list_none">
                                           <ul>
                                             <li>
@@ -879,7 +887,7 @@ include 'dbcon.php';
                                         <div class="row m-0">
                                             <div class="col-md-4 text-center">
                                                 <div class="team_img_wrap">
-                                                    <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-5.jpg" alt="user_img-lg" />
+                                                    <img class="w-100" src="./cph4_assets/images/team-lg-5.jpg" alt="user_img-lg" />
                                                     <div class="team_title">
                                                         <h4>Tricia Diyana</h4>
                                                         <span>Invester</span>
@@ -923,7 +931,7 @@ include 'dbcon.php';
                             <div class="col-lg-4 col-md-6 col-sm-6 res_md_mb_30 res_sm_mb_20">
                                 <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
                                     <div class="text-center">
-                                        <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img6.png" alt="team6" />
+                                        <img src="./cph4_assets/images/team_img6.png" alt="team6" />
                                         <div class="team_social_s2 list_none">
                                           <ul>
                                             <li>
@@ -949,7 +957,7 @@ include 'dbcon.php';
                                         <div class="row m-0">
                                             <div class="col-md-4 text-center">
                                                 <div class="team_img_wrap">
-                                                    <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-6.jpg" alt="user_img-lg" />
+                                                    <img class="w-100" src="./cph4_assets/images/team-lg-6.jpg" alt="user_img-lg" />
                                                     <div class="team_title">
                                                         <h4>Kent Pierce</h4>
                                                         <span>Invester</span>
@@ -993,7 +1001,7 @@ include 'dbcon.php';
                             <div class="col-lg-4 offset-lg-0 col-md-6 offset-md-3 col-sm-6 offset-sm-3">
                                 <div class="bg_light_dark radius_box team_box_s3 animation" data-animation="fadeInUp" data-animation-delay="0.6s">
                                     <div class="text-center">
-                                        <img src="https://ramlogics.com/cph_4/cph4_assets/images/team_img7.png" alt="team7" />
+                                        <img src="./cph4_assets/images/team_img7.png" alt="team7" />
                                         <div class="team_social_s2 list_none">
                                           <ul>
                                             <li>
@@ -1019,7 +1027,7 @@ include 'dbcon.php';
                                         <div class="row m-0">
                                             <div class="col-md-4 text-center">
                                                 <div class="team_img_wrap">
-                                                    <img class="w-100" src="https://ramlogics.com/cph_4/cph4_assets/images/team-lg-7.jpg" alt="user_img-lg" />
+                                                    <img class="w-100" src="./cph4_assets/images/team-lg-7.jpg" alt="user_img-lg" />
                                                     <div class="team_title">
                                                         <h4>Rose Morgen</h4>
                                                         <span>Invester</span>
@@ -1530,7 +1538,7 @@ include 'dbcon.php';
                                 <div class="blog_item animation" data-animation="fadeInUp" data-animation-delay="0.2s">
                                     <div class="blog_img">
                                         <a href="#">
-                                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/blog_small_img1.jpg" alt="blog_small_img1" />
+                                            <img src="./cph4_assets/images/blog_small_img1.jpg" alt="blog_small_img1" />
                                         </a>
                                     </div>
                                     <div class="blog_content">
@@ -1554,7 +1562,7 @@ include 'dbcon.php';
                                 <div class="blog_item animation" data-animation="fadeInUp" data-animation-delay="0.4s">
                                     <div class="blog_img">
                                         <a href="#">
-                                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/blog_small_img2.jpg" alt="blog_small_img2" />
+                                            <img src="./cph4_assets/images/blog_small_img2.jpg" alt="blog_small_img2" />
                                         </a>
                                     </div>
                                     <div class="blog_content">
@@ -1578,7 +1586,7 @@ include 'dbcon.php';
                                 <div class="blog_item animation" data-animation="fadeInUp" data-animation-delay="0.6s">
                                     <div class="blog_img">
                                         <a href="#">
-                                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/blog_small_img3.jpg" alt="blog_small_img3" />
+                                            <img src="./cph4_assets/images/blog_small_img3.jpg" alt="blog_small_img3" />
                                         </a>
                                     </div>
                                     <div class="blog_content">
@@ -1602,7 +1610,7 @@ include 'dbcon.php';
                                 <div class="blog_item animation" data-animation="fadeInUp" data-animation-delay="0.2s">
                                     <div class="blog_img">
                                         <a href="#">
-                                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/blog_small_img1.jpg" alt="blog_small_img1" />
+                                            <img src="./cph4_assets/images/blog_small_img1.jpg" alt="blog_small_img1" />
                                         </a>
                                     </div>
                                     <div class="blog_content">
@@ -1642,42 +1650,42 @@ include 'dbcon.php';
                 <div class="row align-items-center text-center overflow_hide small_space">
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.3s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt1.png" alt="client_logo_wt1" />
+                            <img src="./cph4_assets/images/client_logo_wt1.png" alt="client_logo_wt1" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt2.png" alt="client_logo_wt2" />
+                            <img src="./cph4_assets/images/client_logo_wt2.png" alt="client_logo_wt2" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt3.png" alt="client_logo_wt3" />
+                            <img src="./cph4_assets/images/client_logo_wt3.png" alt="client_logo_wt3" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.6s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt4.png" alt="client_logo_wt4" />
+                            <img src="./cph4_assets/images/client_logo_wt4.png" alt="client_logo_wt4" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.7s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt5.png" alt="client_logo_wt5" />
+                            <img src="./cph4_assets/images/client_logo_wt5.png" alt="client_logo_wt5" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.8s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt6.png" alt="client_logo_wt6" />
+                            <img src="./cph4_assets/images/client_logo_wt6.png" alt="client_logo_wt6" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.8s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt7.png" alt="client_logo_wt7" />
+                            <img src="./cph4_assets/images/client_logo_wt7.png" alt="client_logo_wt7" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 logo_border">
                         <div class="d-flex flex-wrap align-items-center justify-content-center h-100 animation" data-animation="fadeInUp" data-animation-delay="0.8s">
-                            <img src="https://ramlogics.com/cph_4/cph4_assets/images/client_logo_wt8.png" alt="client_logo_wt8" />
+                            <img src="./cph4_assets/images/client_logo_wt8.png" alt="client_logo_wt8" />
                         </div>
                     </div>
                 </div>
@@ -1780,13 +1788,13 @@ include 'dbcon.php';
 
         <!-- START FOOTER SECTION -->
         <footer>
-            <div class="top_footer bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="https://ramlogics.com/cph_4/cph4_assets/images/footer_bg.png">
+            <div class="top_footer bg_light_dark" data-z-index="1" data-parallax="scroll" data-image-src="./cph4_assets/images/footer_bg.png">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-12">
                             <div class="footer_logo mb-3 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
                                 <a href="#home_section" class="page-scroll">
-                                     <img alt="logo" src="https://ramlogics.com/cph_4/dashboard_cph4/images/logo.png" />
+                                     <img alt="logo" src="./dashboard_cph4/images/logo.png" />
                                 </a>
                             </div>
                             <div class="footer_desc">
@@ -1840,27 +1848,27 @@ include 'dbcon.php';
 
         <!-- Latest jQuery -->
         <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/jquery-1.12.4.min.js"></script>
+        <script src="./cph4_assets/js/jquery-1.12.4.min.js"></script>
         <!-- Latest compiled and minified Bootstrap -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="./cph4_assets/bootstrap/js/bootstrap.min.js"></script>
         <!-- owl-carousel min js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/owlcarousel/js/owl.carousel.min.js"></script>
+        <script src="./cph4_assets/owlcarousel/js/owl.carousel.min.js"></script>
         <!-- magnific-popup min js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/magnific-popup.min.js"></script>
+        <script src="./cph4_assets/js/magnific-popup.min.js"></script>
         <!-- waypoints min js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/waypoints.min.js"></script>
+        <script src="./cph4_assets/js/waypoints.min.js"></script>
         <!-- parallax js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/parallax.js"></script>
+        <script src="./cph4_assets/js/parallax.js"></script>
         <!-- countdown js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/jquery.countdown.min.js"></script>
+        <script src="./cph4_assets/js/jquery.countdown.min.js"></script>
         <!-- particles min js  -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/particles.min.js"></script>
+        <script src="./cph4_assets/js/particles.min.js"></script>
         <!-- scripts js -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/jquery.dd.min.js"></script>
+        <script src="./cph4_assets/js/jquery.dd.min.js"></script>
         <!-- jquery.counterup.min js -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/jquery.counterup.min.js"></script>
+        <script src="./cph4_assets/js/jquery.counterup.min.js"></script>
         <!-- scripts js -->
-        <script src="https://ramlogics.com/cph_4/cph4_assets/js/scripts.js"></script>
+        <script src="./cph4_assets/js/scripts.js"></script>
         
         <script>
             particlesJS("particles-js", {"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;

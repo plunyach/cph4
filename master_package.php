@@ -4,12 +4,18 @@ session_start();
 $email = $_SESSION['useremail'];
 if(isset($_POST['submit']))
 {
+    $pacakgevalue = $_POST['value'];
+    $pacakgecurrency = $_POST['curreny'];
     $cphvalue = $_POST['cphvalue'];
-    $insert = "insert into pacakge(cph_value) values($cphvalue)";
+    $sdate=$_POST['sdate'];
+    $edate=$_POST['edate'];
+
+    $insert = "insert into token_price(m_package_name,m_package_price,m_package_tokens, m_start_date, m_end_date) values('$cphvalue',$pacakgevalue, $pacakgecurrency, '$sdate', '$edate')";
     $result = mysqli_query($conn,$insert);
+    
     if($result)
     {
-        echo "<script>alert('Pacakage Added Successfully')</script>";
+        echo "<script>alert('Master Pacakage Added Successfully')</script>";
     }
     else
     {
@@ -75,9 +81,9 @@ if(isset($_POST['submit']))
                         <div class="ml-auto my-2 d-flex align-items-center my-lg-0">
                             <h6 class="mb-0 mr-4"><span>Welcome - </span><span><?php echo $email; ?></span></h6>
                             
-                          <a href="./admin_logout.php"><button class="btn btn-outline-success my-2 my-sm-0">Logout</button></a>
-                          <a href="./master_package.php"><button class="btn btn-outline-success my-2 my-sm-0 ml-2">Add Master Package</button></a>
-                          <a href="./admin_withdrawal.php"><button class="btn btn-outline-success my-2 my-sm-0 ml-2">Withdrawal Request</button></a>
+                          <a href="./admin_logout.php/"><button class="btn btn-outline-success my-2 my-sm-0">Logout</button></a>
+                          <a href="./master_package.php"><button class="btn btn-outline-success my-2 my-sm-0 ml-2">Add Master Token</button></a>
+                          <a href="./admin_withdrawal.php/"><button class="btn btn-outline-success my-2 my-sm-0 ml-2">Withdrawal Request</button></a>
                         </div>
                       </div>
                     </nav>
@@ -91,29 +97,29 @@ if(isset($_POST['submit']))
                  <div class="col-lg-8 col-md-8 col-sm-12 col-12 m-auto">
                      <div class="addpackage card p-3">
                          <div class="packageheadline text-center text-white">
-                             <h2>Add Package</h2>
+                             <h2>Add Master Package</h2>
                          </div>
                          <form action="" method="POST">
                         <div class="form-group textinput_box">
-                            <label class="text-white" for="exampleInputValue">Add CPH4 Value</label>
-                            <input type="text" name="cphvalue" class="form-control" id="exampleInputValue" placeholder="Add CPH4 Value"> 
+                            <label class="text-white" for="exampleInputValue">Enter Master Package Name</label>
+                            <input type="text" name="cphvalue" class="form-control" id="exampleInputValue" placeholder="Enter Master Package Name"> 
                           </div>
-                          <!--<div class="form-group textinput_box">-->
-                          <!--  <label class="text-white" for="exampleInputValue">Add Currency Value</label>-->
-                          <!--  <input type="text" name="value" class="form-control" id="exampleInputValue" placeholder="Add Value"> -->
-                          <!--</div>-->
-                          <!--<div class="form-group textinput_box">-->
-                          <!--  <label class="text-white" for="exampleInputCurreny">Add Curreny</label>-->
-                          <!--  <input type="text" name="curreny" class="form-control" id="exampleInputCurreny" placeholder="Add Curreny">-->
-                          <!--</div> -->
-                          <!--<div class="form-group textinput_box">-->
-                          <!--  <label class="text-white" for="exampleInputCurreny">Start Date</label>-->
-                          <!--  <input type="date" name="sdate" class="form-control" id="exampleInputCurreny" placeholder="Start Curreny">-->
-                          <!--</div> -->
-                          <!--<div class="form-group textinput_box">-->
-                          <!--  <label class="text-white" for="exampleInputCurreny">End Date</label>-->
-                          <!--  <input type="date" name="edate" class="form-control" id="exampleInputCurreny" placeholder="End Curreny">-->
-                          <!--</div> -->
+                          <div class="form-group textinput_box">
+                            <label class="text-white" for="exampleInputValue">Master Package Price</label>
+                            <input type="text" name="value" class="form-control" id="exampleInputValue" placeholder="Master Package Price"> 
+                          </div>
+                          <div class="form-group textinput_box">
+                            <label class="text-white" for="exampleInputCurreny">Add No of Tokens</label>
+                            <input type="text" name="curreny" class="form-control" id="exampleInputCurreny" placeholder="Add No of Token">
+                          </div> 
+                          <div class="form-group textinput_box">
+                            <label class="text-white" for="exampleInputCurreny">Start Date</label>
+                            <input type="date" name="sdate" class="form-control" id="exampleInputCurreny" placeholder="Start Curreny">
+                          </div> 
+                          <div class="form-group textinput_box">
+                            <label class="text-white" for="exampleInputCurreny">End Date</label>
+                            <input type="date" name="edate" class="form-control" id="exampleInputCurreny" placeholder="End Curreny">
+                          </div> 
                           <div class="sub_mit_btn text-center">
                               <input type="submit" name="submit" class="btn sub_mit_btn_" value="Add Pacakge">
                           </div>
@@ -121,26 +127,25 @@ if(isset($_POST['submit']))
                      </div>
                      <div class="addpackage p-3 card">
                          <div class="packageheadline text-center text-white">
-                             <h2>Package List</h2>
+                             <h2>Master Package List</h2>
                          </div>
                          <div class="table_list_area table-responsive">
                              <table class="table table-hover">
                               <thead>
                                 <tr> 
                                   <th scope="col"><span>Sr.No.</span></th>
-                                  <th scope="col"><span>CPH4 Value</span></th>
-                                  <th scope="col"><span>Price/Token</span></th>
-                                  <th scope="col"><span>Package Amount</span></th>
+                                  <th scope="col"><span>Master Package Name</span></th>
+                                  <th scope="col"><span>Price</span></th>
+                                  <th scope="col"><span>No of Tokens</span></th>
+                                  <th scope="col"><span>Start Date</span></th>
+                                  <th scope="col"><span>End Date</span></th>
                                   <th scope="col"><span>Action</span></th>
                                 </tr>
                               </thead>
                               <?php 
-                                $sel = "select * from pacakge";
+                                $sel = "select * from token_price";
                                 $res = mysqli_query($conn,$sel);
                                 $sr = 1;
-                                $price="select * from token_price where m_start_date>CURDATE() AND m_end_date>CURDATE() order by m_start_date ASC limit 1";
-                                $price = mysqli_query($conn,$price);
-                                $price1=mysqli_fetch_assoc($price);
                                 while($row = mysqli_fetch_assoc($res))
                                 {
                                
@@ -149,11 +154,13 @@ if(isset($_POST['submit']))
                             <tbody>
                                 <tr>
                                   <th scope="row"><span><?php echo $sr++; ?></span></th>
-                                  <td><span><?php echo $row['cph_value']; ?></span></td>
-                                  <td><span><?php echo $price1['m_package_price']; ?></span></td>
-                                  <td><span><?php echo ($row['cph_value']*$price1['m_package_price']); ?></span></td> 
+                                  <td><span><?php echo $row['m_package_name']; ?></span></td>
+                                  <td><span><?php echo $row['m_package_price']; ?></span></td>
+                                  <td><span><?php echo $row['m_package_tokens']; ?></span></td> 
+                                  <td><span><?php echo $row['m_start_date']; ?></span></td> 
+                                  <td><span><?php echo $row['m_end_date']; ?></span></td> 
                                   <td><span>
-                                        <a href="https://ramlogics.com/cph_4/delete_package.php?id=<?php echo $row['id']; ?>" class="mx-2"><i class="fa fa-trash" style="font-size:18px;"></i></a>
+                                        <a href="https://ramlogics.com/cph_4/delete_master_package.php?id=<?php echo $row['id']; ?>" class="mx-2"><i class="fa fa-trash" style="font-size:18px;"></i></a>
                                   </span></td> 
                                 </tr>  
                               </tbody>
