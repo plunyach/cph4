@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "ramlogic_cph4";
-$password = "vEueL[C,SYex";
-$db = "ramlogic_cph4";
+$username = "root";
+$password = "Ramlogics1@3";
+$db = "cph4";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password,$db);
 
